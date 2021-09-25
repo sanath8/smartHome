@@ -1,9 +1,96 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Example</title>
-    </head>
-    <body>
-       <marquee> <p>This is an example of a simple HTML page with one paragraph.</p></marquee>
-    </body>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Household Chores ROTA</h2>
+  <p>This app allows us to evenly distribute and track the household chores.</p>
+  <p>Every Sunday the task assignment will change in a rotational way</p>                                                                                
+  <div class="table-responsive">          
+  <table class="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Task</th>
+        <th>Description</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td id="task0"></td>
+        <td>Bath Room</td>
+        <td>On Sunday - Clean up the sink, commode, and bath tub using phenyl/cleaning liquids</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td id="task1"></td>
+        <td>Vaccuum</td>
+        <td>On Sunday - Use the vaccum cleaner to clean up all areas of the house other than the bedrooms</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td id="task2"></td>
+        <td>Kitchen</td>
+        <td>On Sunday - Use the cleaning liquid to clean up the sinks, stove and other dirty surfaces in the kitchen</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td id="task3"></td>
+        <td>Garbage</td>
+        <td>Every day - Throw the old thrash bag and replace a new one in the dustbin.</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<p id="task0"></p>
+<p id="task1"></p>
+<p id="task2"></p>
+<p id="task3"></p>
+
 </html>
+<script>
+// This script is released to the public domain and may be used, modified and
+// distributed without restrictions. Attribution not necessary but appreciated.
+// Source: https://weeknumber.com/how-to/javascript
+
+// Returns the ISO week of the date.
+Date.prototype.getWeek = function() {
+  var date = new Date(this.getTime());
+  date.setHours(0, 0, 0, 0);
+  // Thursday in current week decides the year.
+  date.setDate(date.getDate() + 3 - (date.getDay() + 6) % 7);
+  // January 4 is always in week 1.
+  var week1 = new Date(date.getFullYear(), 0, 4);
+  // Adjust to Thursday in week 1 and count number of weeks from date to week1.
+  return 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000
+                        - 3 + (week1.getDay() + 6) % 7) / 7);
+}
+
+// Returns the four-digit year corresponding to the ISO week of the date.
+Date.prototype.getWeekYear = function() {
+  var date = new Date(this.getTime());
+  date.setDate(date.getDate() + 3 - (date.getDay() + 6) % 7);
+  return date.getFullYear();
+}
+namesMap = {
+    0: "Amar",
+    1: "Kashyap",
+    2: "Harsh",
+    3: "Sanath",
+}
+key = parseInt(new Date().getWeek())
+for(let id in namesMap){
+    document.getElementById("task"+id).innerHTML = namesMap[(1+key+parseInt(id))%Object.keys(namesMap).length];
+}
+</script>
